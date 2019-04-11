@@ -64,18 +64,20 @@ var gpxTimeLayer = L.timeDimension.layer.geoJson(gpxLayer, {
     waitForReady: true
 });
 
-var kmlLayer = omnivore.kml('data/easy_currents_track.kml');
+/* var kmlLayer = omnivore.kml('data/easy_currents_track.kml');
 var kmlTimeLayer = L.timeDimension.layer.geoJson(kmlLayer, {
     updateTimeDimension: true,
     addlastPoint: true,
     waitForReady: true
-});
+}); */
 
 
 var overlayMaps = {
     "GPX Layer": gpxTimeLayer,
-    "KML Layer": kmlTimeLayer
+    /* "KML Layer": kmlTimeLayer */
 };
 var baseLayers = getCommonBaseLayers(map); // see baselayers.js
 L.control.layers(baseLayers, overlayMaps).addTo(map);
+
+/* debugger; */
 gpxTimeLayer.addTo(map);
