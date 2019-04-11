@@ -1,5 +1,5 @@
 /* 
- * Leaflet TimeDimension v1.1.0 - 2019-04-06 
+ * Leaflet TimeDimension v1.1.0 - 2019-04-11 
  * 
  * Copyright 2019 Biel Frontera (ICTS SOCIB) 
  * datacenter@socib.es 
@@ -1773,6 +1773,16 @@ L.Control.TimeDimension = L.Control.extend({
         this._initPlayer();
 
         container = L.DomUtil.create('div', 'leaflet-bar leaflet-bar-horizontal leaflet-bar-timecontrol');
+
+        if (this.options.loopButton) {
+            this._buttonLoop = this._createButton('Loop', container);
+        }
+        if (this.options.displayDate) {
+            this._displayDate = this._createButton('Date', container);
+        }
+        if (this.options.timeSlider) {
+            this._sliderTime = this._createSliderTime(this.options.styleNS + ' timecontrol-slider timecontrol-dateslider', container);
+        }
         if (this.options.backwardButton) {
             this._buttonBackward = this._createButton('Backward', container);
         }
@@ -1785,18 +1795,10 @@ L.Control.TimeDimension = L.Control.extend({
         if (this.options.forwardButton) {
             this._buttonForward = this._createButton('Forward', container);
         }
-        if (this.options.loopButton) {
-            this._buttonLoop = this._createButton('Loop', container);
-        }
-        if (this.options.displayDate) {
-            this._displayDate = this._createButton('Date', container);
-        }
-        if (this.options.timeSlider) {
-            this._sliderTime = this._createSliderTime(this.options.styleNS + ' timecontrol-slider timecontrol-dateslider', container);
-        }
         if (this.options.speedSlider) {
             this._sliderSpeed = this._createSliderSpeed(this.options.styleNS + ' timecontrol-slider timecontrol-speed', container);
         }
+        
 
         this._steps = this.options.timeSteps || 1;
 
