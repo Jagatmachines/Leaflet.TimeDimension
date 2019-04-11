@@ -29,9 +29,13 @@
     "type": "git",
     "url": "git://github.com/socib/Leaflet.TimeDimension.git"
   },
+  "scripts": {
+    "start": "live-server"
+  },
   "dependencies": {
     "iso8601-js-period": "^0.2.1",
-    "leaflet": "^1.4.0"
+    "leaflet": "^1.4.0",
+    "live-server": "^1.2.1"
   },
   "devDependencies": {
     "grunt": "^1.0.4",
