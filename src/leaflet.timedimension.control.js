@@ -35,6 +35,7 @@ L.UI.Knob = L.Draggable.extend({
         }, this);
         L.DomEvent.disableClickPropagation(this._element);
         this.enable();
+
     },
 
     _getProjectionCoef: function() {
@@ -132,7 +133,8 @@ L.Control.TimeDimension = L.Control.extend({
         playerOptions: {
             transitionTime: 1000
         },
-        timeZones: ['UTC', 'Local']
+        timeZones: ['UTC', 'Local'],
+        speedSliderMultiple: []
     },
 
     initialize: function(options) {
@@ -174,6 +176,8 @@ L.Control.TimeDimension = L.Control.extend({
         }
         if (this.options.speedSlider) {
             this._sliderSpeed = this._createSliderSpeed(this.options.styleNS + ' timecontrol-slider timecontrol-speed', container);
+        } else if (this.options.speedSliderMultiple.length) {
+            this._sliderSpeed = this._createSpeedMultiple(this.options.styleNS + ' timecontrol-slider timecontrol-speed', container, this.options.speedSliderMultiple);
         }
         
 
@@ -521,6 +525,60 @@ L.Control.TimeDimension = L.Control.extend({
             speedLabel.innerHTML = this._getDisplaySpeed(knob.getValue());
             this._sliderSpeedValueChanged(knob.getValue());
         }, this);
+        return knob;
+    },
+
+    _createSpeedMultiple: function(className, container, speedSliderMultiple) {
+        var sliderContainer = L.DomUtil.create('div', className, container);
+        /* L.DomEvent
+            .addListener(sliderContainer, 'click', L.DomEvent.stopPropagation)
+            .addListener(sliderContainer, 'click', L.DomEvent.preventDefault);
+*/      var speedLabel = L.DomUtil.create('span', 'speed', sliderContainer);
+        var sliderbar = L.DomUtil.create('div', 'slider', sliderContainer);
+        var initialSpeed = Math.round(10000 / (this._player.getTransitionTime() || 1000)) / 10;
+        speedLabel.innerHTML = this._getDisplaySpeed(initialSpeed);
+        
+        var knob = new L.UI.Knob(sliderbar, {
+            step: this.options.speedStep,
+            rangeMin: this.options.minSpeed,
+            rangeMax: this.options.maxSpeed
+        });
+        
+        knob.on('dragend', function(e) {
+            var value = e.target.getValue();
+            this._draggingSpeed = false;
+            speedLabel.innerHTML = this._getDisplaySpeed(value);
+            this._sliderSpeedValueChanged(value);
+        }, this);
+        knob.on('drag', function(e) {
+            this._draggingSpeed = true;
+            speedLabel.innerHTML = this._getDisplaySpeed(e.target.getValue());
+        }, this);
+         knob.on('positionchanged', function (e) {
+            speedLabel.innerHTML = this._getDisplaySpeed(e.target.getValue());
+        }, this);
+
+        L.DomEvent.on(sliderbar, 'click', function(e) {
+            if (e.target === knob._element) {
+                return; //prevent value changes on drag release
+            }
+            var first = (e.touches && e.touches.length === 1 ? e.touches[0] : e),
+                x = L.DomEvent.getMousePosition(first, sliderbar).x;
+            knob.setPosition(x);
+            speedLabel.innerHTML = this._getDisplaySpeed(knob.getValue());
+            this._sliderSpeedValueChanged(knob.getValue());
+        }, this);
+
+        // With slider multiple option is also shown
+        speedSliderMultiple.map((speed) => {
+            var mul = L.DomUtil.create('div', `mulx${speed}`, sliderContainer);
+            mul.textContent = `${speed}x`;
+            mul.addEventListener('click', () => {
+                speedLabel.innerHTML = this._getDisplaySpeed(speed);
+                this._sliderSpeedValueChanged(speed);
+            })
+        })
+
         return knob;
     },
 
