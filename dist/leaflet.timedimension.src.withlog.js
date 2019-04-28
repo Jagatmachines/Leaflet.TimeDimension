@@ -2168,6 +2168,8 @@ L.Control.TimeDimension = L.Control.extend({
             rangeMin: this.options.minSpeed,
             rangeMax: this.options.maxSpeed
         });
+
+        var sliderMult = L.DomUtil.create('ul', 'speed-control', sliderContainer);
         
         /* knob.on('dragend', function(e) {
             var value = e.target.getValue();
@@ -2196,7 +2198,7 @@ L.Control.TimeDimension = L.Control.extend({
 
         // With slider multiple option is also shown
         speedSliderMultiple.map(function (speed) {
-            var mul = L.DomUtil.create('div', 'mulx' + speed, sliderContainer);
+            var mul = L.DomUtil.create('li', 'mulx' + speed, sliderMult);
             mul.textContent = speed + 'x';
             var self = this;
             mul.addEventListener('click', function() {
