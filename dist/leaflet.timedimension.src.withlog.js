@@ -1800,7 +1800,7 @@ L.Control.TimeDimension = L.Control.extend({
         if (this.options.speedSlider) {
             this._sliderSpeed = this._createSliderSpeed(this.options.styleNS + ' timecontrol-slider timecontrol-speed', container);
         } else if (this.options.speedSliderMultiple.length) {
-            this._sliderSpeed = this._createSpeedMultiple(this.options.styleNS + ' timecontrol-slider timecontrol-speed', container, this.options.speedSliderMultiple);
+            this._sliderSpeed = this._createSpeedMultiple(this.options.styleNS + ' timecontrol-slider', container, this.options.speedSliderMultiple);
         }
         
 
@@ -2160,6 +2160,8 @@ L.Control.TimeDimension = L.Control.extend({
         var sliderbar = L.DomUtil.create('div', 'slider', sliderContainer);
         var initialSpeed = Math.round(10000 / (this._player.getTransitionTime() || 1000)) / 10;
         speedLabel.innerHTML = this._getDisplaySpeed(initialSpeed);
+        speedLabel.style.display = 'none'
+        sliderbar.style.display = 'none'
         
         var knob = new L.UI.Knob(sliderbar, {
             step: this.options.speedStep,
@@ -2167,7 +2169,7 @@ L.Control.TimeDimension = L.Control.extend({
             rangeMax: this.options.maxSpeed
         });
         
-        knob.on('dragend', function(e) {
+        /* knob.on('dragend', function(e) {
             var value = e.target.getValue();
             this._draggingSpeed = false;
             speedLabel.innerHTML = this._getDisplaySpeed(value);
@@ -2179,9 +2181,9 @@ L.Control.TimeDimension = L.Control.extend({
         }, this);
          knob.on('positionchanged', function (e) {
             speedLabel.innerHTML = this._getDisplaySpeed(e.target.getValue());
-        }, this);
+        }, this); */
 
-        L.DomEvent.on(sliderbar, 'click', function(e) {
+        /* L.DomEvent.on(sliderbar, 'click', function(e) {
             if (e.target === knob._element) {
                 return; //prevent value changes on drag release
             }
@@ -2190,7 +2192,7 @@ L.Control.TimeDimension = L.Control.extend({
             knob.setPosition(x);
             speedLabel.innerHTML = this._getDisplaySpeed(knob.getValue());
             this._sliderSpeedValueChanged(knob.getValue());
-        }, this);
+        }, this); */
 
         // With slider multiple option is also shown
         speedSliderMultiple.map(function (speed) {
