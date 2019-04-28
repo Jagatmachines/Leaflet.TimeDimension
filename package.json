@@ -45,7 +45,14 @@
     "grunt-contrib-jshint": "^2.1.0",
     "grunt-contrib-uglify": "^4.0.1",
     "grunt-contrib-watch": "^1.1.0",
-    "grunt-remove-logging": "^0.2.0"
+    "grunt-remove-logging": "^0.2.0",
+    "babel-preset-es2015": "^6.24.1",
+    "grunt-babel": "^6.0.0"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
   },
   "main": "dist/leaflet.timedimension.src.js",
   "style": "dist/leaflet.timedimension.control.css"

@@ -570,14 +570,15 @@ L.Control.TimeDimension = L.Control.extend({
         }, this);
 
         // With slider multiple option is also shown
-        speedSliderMultiple.map((speed) => {
-            var mul = L.DomUtil.create('div', `mulx${speed}`, sliderContainer);
-            mul.textContent = `${speed}x`;
-            mul.addEventListener('click', () => {
-                speedLabel.innerHTML = this._getDisplaySpeed(speed);
-                this._sliderSpeedValueChanged(speed);
+        speedSliderMultiple.map(function (speed) {
+            var mul = L.DomUtil.create('div', 'mulx' + speed, sliderContainer);
+            mul.textContent = speed + 'x';
+            var self = this;
+            mul.addEventListener('click', function() {
+                speedLabel.innerHTML = self._getDisplaySpeed(speed);
+                self._sliderSpeedValueChanged(speed);
             })
-        })
+        }, this)
 
         return knob;
     },
