@@ -575,10 +575,14 @@ L.Control.TimeDimension = L.Control.extend({
 
         // With slider multiple option is also shown
         speedSliderMultiple.map(function (speed) {
-            var mul = L.DomUtil.create('li', 'mulx' + speed, sliderMult);
+            var mul = L.DomUtil.create('li', 'mulx' + speed + (speed == 1 ? ' active' : ''), sliderMult);
             mul.textContent = speed + 'x';
             var self = this;
             mul.addEventListener('click', function() {
+                speedSliderMultiple.forEach(function(mulEach) {
+                    document.getElementsByClassName('mulx' + mulEach)[0].classList.remove('active')
+                })
+                mul.classList.add('active')
                 speedLabel.innerHTML = self._getDisplaySpeed(speed);
                 self._sliderSpeedValueChanged(speed);
             })

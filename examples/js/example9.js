@@ -31,7 +31,7 @@ var timeDimensionControlOptions = {
     maxSpeed:      10,
     timeSliderDragUpdate: true,
     speedSlider: false,
-    speedSliderMultiple: [10, 2, 5, 20],
+    speedSliderMultiple: [10, 2, 5, 20, 1],
 
     timeZones: ['Local']
 };
