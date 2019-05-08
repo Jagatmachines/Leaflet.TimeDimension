@@ -1,5 +1,5 @@
 /* 
- * Leaflet TimeDimension v1.1.0 - 2019-05-02 
+ * Leaflet TimeDimension v1.1.0 - 2019-05-09 
  * 
  * Copyright 2019 Biel Frontera (ICTS SOCIB) 
  * datacenter@socib.es 
@@ -2206,8 +2206,10 @@ L.Control.TimeDimension = L.Control.extend({
                     document.getElementsByClassName('mulx' + mulEach)[0].classList.remove('active')
                 })
                 mul.classList.add('active')
-                speedLabel.innerHTML = self._getDisplaySpeed(speed);
-                self._sliderSpeedValueChanged(speed);
+
+                var speedMultiple = self.options.speedMultiple ? self.options.speedMultiple : 1;
+                speedLabel.innerHTML = self._getDisplaySpeed(speed * speedMultiple);
+                self._sliderSpeedValueChanged(speed * speedMultiple);
             })
         }, this)
 
